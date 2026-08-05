@@ -57,7 +57,7 @@ body {
 
 .product-image {
   width: 100%;
-  height: 230px;
+  height: 600px;
   object-fit: cover;
   display: block;
 }
