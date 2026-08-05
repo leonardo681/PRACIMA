@@ -57,7 +57,8 @@ body {
 
 .product-image {
   width: 100%;
-  height: clamp(320px, 72vh, 600px);
+  height: min(62vh, 600px);
+  min-height: 340px;
   object-fit: cover;
   display: block;
 }
@@ -99,7 +100,7 @@ body {
   }
 
   .product-image {
-    height: 360px;
+    height: 420px;
   }
 }
 
