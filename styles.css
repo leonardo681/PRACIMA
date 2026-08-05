@@ -57,7 +57,7 @@ body {
 
 .product-image {
   width: 100%;
-  height: 600px;
+  height: clamp(320px, 72vh, 600px);
   object-fit: cover;
   display: block;
 }
@@ -96,6 +96,10 @@ body {
 @media (min-width: 700px) {
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-image {
+    height: 360px;
   }
 }
 
