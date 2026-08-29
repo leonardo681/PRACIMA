@@ -1,11 +1,11 @@
 :root {
-  --primary: #102b43;
-  --primary-dark: #071a2d;
-  --accent: #f3f7ff;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --card: #ffffff;
-  --shadow: 0 10px 30px rgba(3, 16, 37, 0.12);
+  --primary: #c79a69;
+  --primary-dark: #7b5637;
+  --accent: #f8efe6;
+  --text: #2f241d;
+  --muted: #765d49;
+  --card: #fffaf5;
+  --shadow: 0 10px 30px rgba(87, 64, 46, 0.12);
 }
 
 * {
@@ -15,7 +15,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f4f7fb;
+  background: #f7efe7;
   color: var(--text);
 }
 
@@ -25,8 +25,8 @@ body {
 }
 
 .topbar {
-  background: linear-gradient(135deg, var(--primary), #17436f);
-  color: white;
+  background: linear-gradient(135deg, var(--primary), #a9784d);
+  color: #fffaf5;
   padding: 20px 0;
   text-align: center;
 }
@@ -74,14 +74,14 @@ body {
 
 .product-price {
   margin: 0;
-  color: #0f5cab;
+  color: #8d6240;
   font-weight: 700;
   font-size: 1rem;
 }
 
 .footer {
   background: var(--primary-dark);
-  color: #d9e3f0;
+  color: #f5eadf;
   padding: 18px 0;
 }
 
