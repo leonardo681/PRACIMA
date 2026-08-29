@@ -14,8 +14,15 @@
     </header>
 
     <main class="container">
+      <nav class="category-nav" aria-label="Categorias de produtos">
+        <button class="category-btn" type="button" data-target="camisetas">Camisetas</button>
+        <button class="category-btn" type="button" data-target="livros">Livros</button>
+        <button class="category-btn" type="button" data-target="biblias">Bíblias</button>
+        <button class="category-btn" type="button" data-target="outros">Outros</button>
+      </nav>
+
       <section class="products-section">
-        <div id="products" class="products-grid"></div>
+        <div id="products"></div>
       </section>
     </main>
 
@@ -25,6 +32,23 @@
         <p>Igreja Sara Biguaçu</p>
       </div>
     </footer>
+
+    <div id="product-modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close="true"></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+        <button class="modal-close" type="button" aria-label="Fechar">×</button>
+        <img id="modal-image" src="" alt="Produto ampliado" />
+        <div class="modal-body">
+          <h3 id="modal-name"></h3>
+          <p id="modal-price" class="modal-price"></p>
+          <p id="modal-description"></p>
+        </div>
+      </div>
+    </div>
+
+    <button id="scroll-top-btn" class="scroll-top-btn" type="button" aria-label="Voltar ao topo">
+      ↑
+    </button>
 
     <script src="script.js"></script>
   </body>
