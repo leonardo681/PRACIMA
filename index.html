@@ -1,55 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SARA STORE</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="container">
-        <p class="brand">SARA STORE</p>
-      </div>
-    </header>
-
-    <main class="container">
-      <nav class="category-nav" aria-label="Categorias de produtos">
-        <button class="category-btn" type="button" data-target="camisetas">Camisetas</button>
-        <button class="category-btn" type="button" data-target="livros">Livros</button>
-        <button class="category-btn" type="button" data-target="biblias">Bíblias</button>
-        <button class="category-btn" type="button" data-target="outros">Outros</button>
-      </nav>
-
-      <section class="products-section">
-        <div id="products"></div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container footer-content">
-        <p>Todos os direitos reservados</p>
-        <p>Igreja Sara Biguaçu</p>
-      </div>
-    </footer>
-
-    <div id="product-modal" class="modal hidden" aria-hidden="true">
-      <div class="modal-backdrop" data-close="true"></div>
-      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
-        <button class="modal-close" type="button" aria-label="Fechar">×</button>
-        <img id="modal-image" src="" alt="Produto ampliado" />
-        <div class="modal-body">
-          <h3 id="modal-name"></h3>
-          <p id="modal-price" class="modal-price"></p>
-          <p id="modal-description"></p>
-        </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SARA STORE – Catálogo de preços | Sara Biguaçu</title>
+  <meta name="description" content="Catálogo de preços da loja da Igreja Sara Nossa Terra Biguaçu: camisetas, livros, bíblias e mais. Vendas somente presenciais, no balcão da loja.">
+  <meta name="theme-color" content="#6F5227">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="SARA STORE">
+  <meta property="og:title" content="SARA STORE – Catálogo de preços | Sara Biguaçu">
+  <meta property="og:description" content="Veja os preços da loja da Igreja Sara Nossa Terra Biguaçu. Vendas somente presenciais, no balcão.">
+  <meta property="og:url" content="https://leonardo681.github.io/PRACIMA/">
+  <meta property="og:image" content="https://leonardo681.github.io/PRACIMA/img/logo.png">
+  <meta property="og:image:alt" content="Logo da Igreja Sara Nossa Terra Biguaçu">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=1">
+  <link rel="modulepreload" href="js/comum.js?v=1">
+  <link rel="modulepreload" href="js/dialogo.js?v=1">
+  <script type="module" src="js/app.js?v=1"></script>
+  <noscript><style>.carregando, .busca { display: none; }</style></noscript>
+</head>
+<body>
+  <header class="topo">
+    <div class="conteudo">
+      <span class="logo" aria-hidden="true"><img src="img/logo.png" alt="" width="44" height="44"><span>sara</span></span>
+      <div>
+        <h1 id="titulo" tabindex="-1">SARA STORE</h1>
+        <p>Igreja Sara Nossa Terra Biguaçu • Catálogo de preços</p>
       </div>
     </div>
+  </header>
 
-    <button id="scroll-top-btn" class="scroll-top-btn" type="button" aria-label="Voltar ao topo">
-      ↑
+  <p class="faixa">Vendas somente presenciais no balcão da loja<span id="faixa-pagamentos"></span></p>
+
+  <main>
+    <div class="busca conteudo" role="search">
+      <label class="vh" for="busca">Buscar produto</label>
+      <div class="campo">
+        <input id="busca" type="search" placeholder="Buscar produto…" autocomplete="off" spellcheck="false" enterkeyhint="search">
+        <button id="limpar" class="limpar" type="button" aria-label="Limpar busca" hidden>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <p id="contagem" class="contagem conteudo" role="status" aria-live="polite"></p>
+
+    <nav id="chips" class="chips" aria-label="Categorias" hidden></nav>
+
+    <div class="conteudo"><div id="aviso" class="aviso" role="status" hidden></div></div>
+
+    <div id="lista" class="lista conteudo" aria-busy="true">
+      <div class="carregando">
+        <p class="vh">Carregando o catálogo…</p>
+        <div class="esqueleto" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <noscript>
+        <p class="erro">Para ver o catálogo, ative o JavaScript do navegador. Os preços também podem ser consultados no balcão da loja.</p>
+      </noscript>
+    </div>
+  </main>
+
+  <section id="igreja" class="igreja" aria-labelledby="igreja-titulo" hidden>
+    <div id="igreja-conteudo" class="conteudo"></div>
+  </section>
+
+  <footer class="rodape">
+    <p><span id="atualizado"></span>Preços podem mudar; confirme no balcão.</p>
+    <p>© <span id="ano">2026</span> SARA STORE — <span id="copyright">Todos os direitos reservados</span></p>
+    <p>Igreja Sara Nossa Terra Biguaçu</p>
+  </footer>
+
+  <button id="voltar-topo" class="voltar-topo" type="button" aria-label="Voltar ao topo" hidden>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-7 7 7-7 7 7"/></svg>
+  </button>
+
+  <p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+  <dialog id="detalhe" class="detalhe" aria-labelledby="detalhe-nome">
+    <button id="fechar" class="fechar" type="button" aria-label="Fechar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
-
-    <script src="script.js"></script>
-  </body>
+    <div id="detalhe-conteudo" class="detalhe-in"></div>
+  </dialog>
+</body>
 </html>

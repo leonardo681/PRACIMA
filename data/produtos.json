@@ -1,0 +1,248 @@
+{
+  "versao": 1,
+  "atualizadoEm": "2026-10-09T20:00:00-03:00",
+  "categorias": [
+    {
+      "id": "camisetas",
+      "nome": "Camisetas",
+      "ordem": 1
+    },
+    {
+      "id": "livros",
+      "nome": "Livros",
+      "ordem": 2
+    },
+    {
+      "id": "biblias",
+      "nome": "Bíblias",
+      "ordem": 3
+    },
+    {
+      "id": "outros",
+      "nome": "Outros",
+      "ordem": 4
+    }
+  ],
+  "produtos": [
+    {
+      "id": "camiseta-jesus-mv1kiu80",
+      "categoria": "camisetas",
+      "nome": "Camiseta Jesus",
+      "descricao": "Camiseta com mensagem cristã, leve e confortável, ideal para uso no dia a dia com estilo e testemunho.",
+      "precoCentavos": 7450,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 10
+    },
+    {
+      "id": "camiseta-fe-e-graca-mv1kiu81",
+      "categoria": "camisetas",
+      "nome": "Camiseta Fé e Graça",
+      "descricao": "Estampa inspiradora com tema de fé e graça, ideal para evangelizar e expressar a crença com simplicidade e alegria.",
+      "precoCentavos": 6990,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 20
+    },
+    {
+      "id": "camiseta-louvor-mv1kiu82",
+      "categoria": "camisetas",
+      "nome": "Camiseta Louvor",
+      "descricao": "Peça com visual moderno e tema de louvor, perfeita para quem ama adoração, música e expressão de fé.",
+      "precoCentavos": 7990,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 30
+    },
+    {
+      "id": "camiseta-crista-feminina-mv1kiu83",
+      "categoria": "camisetas",
+      "nome": "Camiseta Cristã Feminina",
+      "descricao": "Camiseta com design delicado e mensagem cristã feminina, mantendo conforto, beleza e identidade de fé.",
+      "precoCentavos": 8200,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 40
+    },
+    {
+      "id": "camiseta-missionaria-mv1kiu84",
+      "categoria": "camisetas",
+      "nome": "Camiseta Missionária",
+      "descricao": "Camiseta com proposta missionária, ideal para quem deseja anunciar o evangelho com estilo e propósito.",
+      "precoCentavos": 7650,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 50
+    },
+    {
+      "id": "camiseta-semeando-esperanca-mv1kiu85",
+      "categoria": "camisetas",
+      "nome": "Camiseta Semeando Esperança",
+      "descricao": "Peça com mensagem de esperança e encorajamento, perfeita para quem quer transmitir fé, amor e propósito.",
+      "precoCentavos": 8490,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 60
+    },
+    {
+      "id": "camiseta-de-evangelismo-mv1kiu86",
+      "categoria": "camisetas",
+      "nome": "Camiseta de Evangelismo",
+      "descricao": "Modelo com tema de evangelismo e testemunho, ideal para compartilhar a mensagem de Cristo com leveza e autenticidade.",
+      "precoCentavos": 7200,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 70
+    },
+    {
+      "id": "livro-de-devocional-mv1kiu87",
+      "categoria": "livros",
+      "nome": "Livro de Devocional",
+      "descricao": "Livro com textos diários para fortalecer a fé, a oração e a leitura espiritual ao longo da semana.",
+      "precoCentavos": 5490,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 10
+    },
+    {
+      "id": "livro-de-historias-biblicas-mv1kiu88",
+      "categoria": "livros",
+      "nome": "Livro de Histórias Bíblicas",
+      "descricao": "Livro educativo com histórias da Bíblia em linguagem simples, ideal para crianças e famílias.",
+      "precoCentavos": 4850,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 20
+    },
+    {
+      "id": "livro-de-reflexao-crista-mv1kiu89",
+      "categoria": "livros",
+      "nome": "Livro de Reflexão Cristã",
+      "descricao": "Material com reflexões profundas sobre fé, propósito e vida cristã para leitura pessoal e estudo em grupo.",
+      "precoCentavos": 6200,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 30
+    },
+    {
+      "id": "biblia-de-estudo-mv1kiu8a",
+      "categoria": "biblias",
+      "nome": "Bíblia de Estudo",
+      "descricao": "Bíblia com auxílio de estudo, ideal para quem deseja aprofundar a leitura com explicações, referências e reflexão sobre os textos bíblicos.",
+      "precoCentavos": 8990,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 10
+    },
+    {
+      "id": "biblia-premium-mv1kiu8b",
+      "categoria": "biblias",
+      "nome": "Bíblia Premium",
+      "descricao": "Modelo premium com acabamento refinado, perfeito para uso pessoal, presente especial e leitura diária com mais conforto.",
+      "precoCentavos": 12900,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 20
+    },
+    {
+      "id": "biblia-infantil-mv1kiu8c",
+      "categoria": "biblias",
+      "nome": "Bíblia Infantil",
+      "descricao": "Bíblia adaptada para crianças, com linguagem simples, histórias bíblicas e ilustrações que tornam a leitura mais acessível.",
+      "precoCentavos": 5990,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 30
+    },
+    {
+      "id": "biblia-compacta-mv1kiu8d",
+      "categoria": "biblias",
+      "nome": "Bíblia Compacta",
+      "descricao": "Modelo compacto, fácil de levar na bolsa ou mochila, ideal para estudo rápido, viagem e leitura em qualquer lugar.",
+      "precoCentavos": 6490,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 40
+    },
+    {
+      "id": "biblia-para-adolescentes-mv1kiu8e",
+      "categoria": "biblias",
+      "nome": "Bíblia para Adolescentes",
+      "descricao": "Bíblia pensada para jovens, com linguagem atual, temas relevantes e conteúdo que conecta a Palavra com a realidade.",
+      "precoCentavos": 9500,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 50
+    },
+    {
+      "id": "biblia-em-couro-mv1kiu8f",
+      "categoria": "biblias",
+      "nome": "Bíblia em Couro",
+      "descricao": "Bíblia em acabamento premium em couro, com estética sofisticada, durabilidade e valor para presente ou uso pessoal.",
+      "precoCentavos": 14990,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 60
+    },
+    {
+      "id": "biblia-com-cantos-mv1kiu8g",
+      "categoria": "biblias",
+      "nome": "Bíblia com Cantos",
+      "descricao": "Bíblia com acabamento especial e detalhes cuidadosos, indicada para leitura mais íntima e para quem valoriza qualidade.",
+      "precoCentavos": 11000,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 70
+    },
+    {
+      "id": "kit-de-oracao-mv1kiu8h",
+      "categoria": "outros",
+      "nome": "Kit de Oração",
+      "descricao": "Kit com itens devocionais para apoio na oração, estudo e rotina espiritual do dia a dia.",
+      "precoCentavos": 4800,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 10
+    },
+    {
+      "id": "caneca-crista-mv1kiu8i",
+      "categoria": "outros",
+      "nome": "Caneca Cristã",
+      "descricao": "Caneca com mensagem cristã, ideal para café, chá e momentos de reflexão e fé.",
+      "precoCentavos": 3990,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 20
+    },
+    {
+      "id": "agenda-devocional-mv1kiu8j",
+      "categoria": "outros",
+      "nome": "Agenda Devocional",
+      "descricao": "Agenda para organização pessoal com foco em oração, metas e leitura diária da Palavra.",
+      "precoCentavos": 4250,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 30
+    }
+  ]
+}
