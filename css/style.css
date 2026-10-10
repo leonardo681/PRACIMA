@@ -167,7 +167,8 @@ a { color: inherit; }
   background: rgb(250 248 243 / .94); color: var(--texto); box-shadow: 0 1px 4px rgb(17 17 17 / .25);
 }
 .foto { display: flex; justify-content: center; background: var(--fundo-foto); }
-.foto img { display: block; width: min(100%, 44vh); width: min(100%, 44dvh); height: auto; aspect-ratio: 1; object-fit: cover; }
+/* Celular: foto de ponta a ponta, com altura limitada para o preço aparecer sem rolar. */
+.foto img { display: block; width: 100%; height: min(100vw, 44vh); height: min(100vw, 44dvh); object-fit: cover; }
 .corpo { display: grid; gap: 12px; padding: 16px 16px 24px; }
 .corpo h2 { padding-right: 48px; font-size: 22px; line-height: 1.25; }
 .corpo .selo, .corpo .botao { justify-self: start; }
@@ -226,7 +227,7 @@ a { color: inherit; }
   }
   .detalhe-in.com-foto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .com-foto .foto { align-items: flex-start; }
-  .com-foto .foto img { width: 100%; }
+  .com-foto .foto img { width: 100%; height: auto; aspect-ratio: 1; }
   .corpo { align-content: start; padding: 24px; }
 }
 @media (min-width: 1100px) {
