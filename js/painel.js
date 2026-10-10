@@ -418,7 +418,7 @@ async function lerDoSite(caminho) {
 let leituraAtual = 0;
 
 // Com chave: sempre a versão mais nova pela API. Sem chave (ou se pedir): a cópia do GitHub Pages.
-async function carregarDados({ doSite = false } = {}) {
+async function carregarDados() {
   const minha = ++leituraAtual;
   const cliente = estado.cliente;
   estado.carregando = true;
@@ -428,7 +428,7 @@ async function carregarDados({ doSite = false } = {}) {
     let produtos;
     let igreja;
     let origem;
-    if (cliente && !doSite) {
+    if (cliente) {
       ({ produtos, igreja } = await cliente.lerDados());
       origem = 'api';
     } else {
@@ -530,9 +530,6 @@ function renderAvisos() {
     const mensagem = estado.erroCarga instanceof Error && estado.erroCarga.message
       ? estado.erroCarga.message : 'Não foi possível carregar os dados.';
     const botoes = [botao('Tentar novamente', { classe: 'botao', aoClicar: () => carregarDados() })];
-    if (estado.cliente) {
-      botoes.push(botao('Usar a cópia do site', { aoClicar: () => carregarDados({ doSite: true }) }));
-    }
     blocos.push(caixaAviso({
       titulo: estado.base ? 'Não foi possível atualizar os dados' : 'Não foi possível carregar os dados',
       textos: [mensagem, estado.base ? 'Continuo mostrando a última versão lida.' : ''].filter(Boolean),
@@ -546,7 +543,16 @@ function renderAvisos() {
     blocos.push(caixaAviso({ textos }));
   }
   if (estado.vista?.avisos.length) {
-    const tirarObsoletas = () => {
+    const tirarObsoletas = async () => {
+      const resposta = await abrirCaixa({
+        titulo: 'Tirar essas partes do rascunho?',
+        textos: ['Elas não valem mais e serão apagadas deste aparelho.'],
+        botoes: [
+          { valor: null, texto: 'Cancelar', foco: true },
+          { valor: 'tirar', texto: 'Tirar do rascunho', classe: 'botao-perigo' },
+        ],
+      });
+      if (resposta !== 'tirar') return;
       const obsoletas = opsObsoletas();
       definirOps(estado.ops.filter((op) => !obsoletas.includes(op)));
     };
@@ -922,6 +928,7 @@ const form = {
   salvando: false,
   sujo: false,
   focoAoFechar: null,
+  fechadoPeloNavegador: false, // o Voltar repetido do Android fechou sem perguntar
 };
 let contadorVariacao = 0;
 let ultimaCategoria = '';
@@ -983,6 +990,7 @@ function abrirFormProduto(id = null) {
     preparandoFoto: false,
     salvando: false,
     sujo: false,
+    fechadoPeloNavegador: false,
     focoAoFechar: document.activeElement?.dataset?.foco || (produto ? `editar:${produto.id}` : null),
   });
 
@@ -1345,6 +1353,15 @@ async function pedirFecharForm() {
 }
 
 function aoFecharForm() {
+  if (form.fechadoPeloNavegador) {
+    form.fechadoPeloNavegador = false;
+    if (form.sujo || form.fotoNova) {
+      // O navegador fechou o formulário à força: reabre para não perder o que foi digitado.
+      $('dialogo-produto').showModal();
+      pedirFecharForm();
+      return;
+    }
+  }
   if (form.fotoNova) URL.revokeObjectURL(form.fotoNova.url);
   form.fotoNova = null;
   form.vez++;
@@ -2202,9 +2219,17 @@ function ligarEventos() {
   $('p-foto-remover').addEventListener('click', removerFotoDoForm);
   $('produto-fechar').addEventListener('click', pedirFecharForm);
   $('produto-cancelar').addEventListener('click', pedirFecharForm);
-  dialogoProduto.addEventListener('cancel', (evento) => {
+  // Esc tratado no keydown: assim o navegador não gera o pedido de fechamento que,
+  // repetido, o Chrome deixa de permitir cancelar.
+  dialogoProduto.addEventListener('keydown', (evento) => {
+    if (evento.key !== 'Escape') return;
     evento.preventDefault();
     pedirFecharForm();
+  });
+  dialogoProduto.addEventListener('cancel', (evento) => {
+    evento.preventDefault();
+    if (evento.cancelable) pedirFecharForm();
+    else form.fechadoPeloNavegador = true; // Voltar repetido do Android: vai fechar de qualquer jeito
   });
   dialogoProduto.addEventListener(FECHADO, aoFecharForm);
 
@@ -2219,6 +2244,9 @@ function ligarEventos() {
   $('descartar').addEventListener('click', descartarAlteracoes);
   dialogoPublicar().addEventListener('cancel', (evento) => {
     if (estado.publicando) evento.preventDefault();
+  });
+  dialogoPublicar().addEventListener('keydown', (evento) => {
+    if (evento.key === 'Escape' && estado.publicando) evento.preventDefault();
   });
 
   window.addEventListener('beforeunload', (evento) => {

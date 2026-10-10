@@ -17,7 +17,7 @@ O acesso ao painel é passado pessoalmente pelo responsável da loja.
 
 ```
 index.html            catálogo público
-painel.html           painel de administração
+painel.html           uso interno da loja
 qr.html               página para imprimir o QR Code (folha A5 ou display de mesa)
 css/style.css         estilo do catálogo
 css/painel.css        estilo do painel
@@ -51,7 +51,7 @@ O endereço diferencia maiúsculas: `/PRACIMA/` funciona e `/pracima/` dá erro.
 1. Na pasta do projeto, rode `python -m http.server 8000` e abra <http://localhost:8000>.
    Abrindo o arquivo direto (`file://`), o `fetch` dos dados não funciona.
 2. Para testar no celular, use o próprio GitHub Pages, não o IP da rede local. O painel precisa de HTTPS (ou `localhost`).
-3. Testes automáticos: `node --test testes/` (Node 20.19 ou mais novo, sem npm).
+3. Testes automáticos: `node --test testes/` (Node 20 ou mais novo, sem npm).
 
 ## Editar os dados da igreja pelo site do GitHub
 
@@ -80,7 +80,7 @@ Se a seção da igreja sumir depois de uma edição, o arquivo ficou com erro. V
   - Nunca commite um `produtos.json` antigo por cima do atual.
 - A cada mudança de CSS ou JS, aumente o número `?v=` nas tags `<link>`/`<script>` **e** nos `import` entre os módulos. O GitHub Pages guarda arquivos em cache por 10 minutos.
 - Nunca use `innerHTML` com dados de produto. Monte o HTML com `createElement` + `textContent`.
-- Nenhuma chave, token ou senha pode ser commitada. O GitHub revoga automaticamente chaves que aparecem em repositório público.
+- Nenhuma chave, token ou senha pode ser commitada.
 
 ### Versão da API do GitHub
 

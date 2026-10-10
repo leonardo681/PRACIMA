@@ -287,7 +287,8 @@ export function aplicarAlteracoes(base, ops = []) {
     } else if (op.acao === 'alterar') {
       if (i === -1) {
         const oQue = op.tipo === 'categoria' ? 'A categoria' : 'O produto';
-        avisos.push(`${oQue} "${rotuloDaOp(op, dados)}" foi excluído em outro aparelho; sua alteração foi descartada.`);
+        const excluido = op.tipo === 'categoria' ? 'excluída' : 'excluído';
+        avisos.push(`${oQue} "${rotuloDaOp(op, dados)}" foi ${excluido} em outro aparelho; sua alteração foi descartada.`);
         continue;
       }
       aplicarCampos(lista[i], op.campos);

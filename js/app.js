@@ -365,7 +365,7 @@ function mostrarProduto(id) {
   const p = estado.produtos.get(id);
   if (!p) return false;
   preencherDetalhe(p);
-  if (!dialogo.open) dialogo.showModal();
+  if (!dialogo.open && typeof dialogo.showModal === 'function') dialogo.showModal();
   return true;
 }
 
@@ -395,6 +395,15 @@ function abrirLinkInicial() {
   if (idDoLink === null) return;
   const id = idDoLink;
   idDoLink = null;
+  // Página recarregada com o detalhe aberto: a entrada já é do produto, não duplica.
+  if (history.state?.produto === id) {
+    origem = null;
+    if (!mostrarProduto(id)) {
+      limparHash();
+      avisar(AVISO_SUMIU);
+    }
+    return;
+  }
   limparHash();
   if (!estado.produtos.has(id)) {
     avisar(AVISO_SUMIU);
@@ -436,16 +445,25 @@ addEventListener('popstate', () => {
   const id = history.state?.produto;
   if (dialogo.open && !id) {
     dialogo.close(); // nunca history.back() aqui
-  } else if (id && !dialogo.open) {
+  }
+  if (id && !dialogo.open) {
     origem = null; // botão Avançar
     if (!mostrarProduto(id)) {
       limparHash();
       avisar(AVISO_SUMIU);
     }
   } else if (!id && !dialogo.open && estado.produtos.size && lerIdDoHash() !== null) {
-    // Link de produto colado na barra com o site já aberto: trata como link compartilhado.
-    idDoLink = lerIdDoHash();
-    abrirLinkInicial();
+    // Link de produto colado na barra com o site já aberto: o navegador já criou a entrada
+    // nova, e a anterior é o catálogo. Basta marcar esta entrada como do produto.
+    const colado = lerIdDoHash();
+    if (estado.produtos.has(colado)) {
+      origem = null;
+      history.replaceState({ produto: colado }, '', `#produto=${encodeURIComponent(colado)}`);
+      mostrarProduto(colado);
+    } else {
+      limparHash();
+      avisar(AVISO_SUMIU);
+    }
   }
 });
 

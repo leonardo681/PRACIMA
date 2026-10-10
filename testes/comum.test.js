@@ -374,7 +374,7 @@ describe('rascunho: compactarOps + aplicarAlteracoes', () => {
     assert.deepEqual(dados, base);
     assert.equal(avisos.length, 2);
     assert.match(avisos[0], /"Boné Sara" foi excluído em outro aparelho; sua alteração foi descartada/);
-    assert.match(avisos[1], /"Acessórios" foi excluído em outro aparelho/);
+    assert.match(avisos[1], /A categoria "Acessórios" foi excluída em outro aparelho/);
   });
 
   test('categoria com produto OCULTO não é excluída', () => {

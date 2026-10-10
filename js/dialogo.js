@@ -6,7 +6,7 @@
 export const FECHADO = 'dialogo-fechado';
 
 export function prepararDialogo(dialogo) {
-  if (!dialogo || dialogo.dataset.preparado) return dialogo;
+  if (!dialogo || dialogo.dataset.preparado || typeof HTMLDialogElement === 'undefined') return dialogo;
   dialogo.dataset.preparado = '1';
 
   let aberto = dialogo.open;
