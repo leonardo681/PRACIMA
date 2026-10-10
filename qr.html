@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Code para imprimir | SARA STORE</title>
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <style id="estilo-pagina">@page { size: A5 portrait; margin: 0; }</style>
+  <style>
+    :root {
+      --bronze-claro: #AB9472;
+      --bronze-escuro: #7A5A2B;
+      --cabecalho: linear-gradient(135deg, #6F5227, #8A6530);
+      --creme: #E4E0D5;
+      --card: #FAF8F3;
+      --texto: #111111;
+      --texto-2: #5A5248;
+      --acento: #C62737;
+      --branco: #FFFFFF;
+      --fonte: Roboto, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      color-scheme: light;
+    }
+    *, *::before, *::after { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { margin: 0; background: var(--creme); color: var(--texto); font: 400 16px/1.5 var(--fonte); }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid var(--bronze-escuro); outline-offset: 2px; }
+
+    /* Controles (não saem na impressão) */
+    .controles { max-width: 720px; margin: 0 auto; padding: 16px; }
+    .controles h1 { margin: 0 0 4px; font-size: 22px; }
+    .controles p { margin: 0; }
+    fieldset { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; padding: 0; border: 0; }
+    legend { margin-bottom: 8px; padding: 0; font-weight: 700; }
+    .opcao {
+      display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px;
+      border: 1px solid var(--bronze-claro); border-radius: 22px; background: var(--card); cursor: pointer;
+    }
+    .opcao input { width: 20px; height: 20px; margin: 0; accent-color: var(--bronze-escuro); }
+    .botao {
+      min-height: 48px; padding: 0 24px; border: 0; border-radius: 24px;
+      background: var(--bronze-escuro); color: var(--branco); font: inherit; font-weight: 700; cursor: pointer;
+    }
+    .controles .dica { margin-top: 12px; color: var(--texto-2); }
+    .controles .erro { margin-top: 12px; padding: 10px 12px; border-left: 4px solid var(--acento); border-radius: 8px; background: var(--card); }
+
+    /* Folha: tudo dentro dela é medido em cqw (largura da folha), igual na tela e no papel */
+    .folha { container-type: inline-size; width: min(148mm, 100% - 32px); margin: 0 auto 32px; background: var(--branco); box-shadow: 0 2px 12px rgb(17 17 17 / .2); }
+    .folha.mesa { width: min(210mm, 100% - 32px); }
+    .cartao {
+      position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      aspect-ratio: 148 / 210; padding: 9cqw 8cqw 8cqw; text-align: center; color: var(--texto);
+      background: var(--cabecalho) top / 100% 3cqw no-repeat, var(--cabecalho) bottom / 100% 3cqw no-repeat, var(--branco);
+    }
+    .cartao p { margin: 0; }
+    .marca { display: flex; align-items: center; gap: 4cqw; text-align: left; }
+    .logo {
+      position: relative; flex: none; display: grid; place-items: center; width: 15cqw; height: 15cqw;
+      border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #977037, #AB9472);
+    }
+    .logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .logo span { color: var(--branco); font-size: 4.4cqw; font-weight: 700; line-height: 1; }
+    .logo img ~ span { visibility: hidden; }
+    .nome-loja { font-size: 8cqw; font-weight: 700; letter-spacing: .06em; line-height: 1.1; }
+    .cartao .igreja-nome { margin-top: .8cqw; color: var(--texto-2); font-size: 3.4cqw; line-height: 1.25; }
+    .chamada { font-size: 7.2cqw; font-weight: 700; line-height: 1.15; }
+    .qr { width: 60cqw; aspect-ratio: 1; }
+    .qr svg { display: block; width: 100%; height: 100%; }
+    .sem-qr { display: grid; place-items: center; height: 100%; padding: 4cqw; border: .5cqw dashed var(--bronze-claro); color: var(--texto-2); font-size: 3.6cqw; }
+    .url { color: var(--texto-2); font-size: 3.7cqw; line-height: 1.3; overflow-wrap: anywhere; }
+    .siga { color: var(--bronze-escuro); font-size: 5cqw; font-weight: 700; }
+
+    /* Display de mesa: A4 dobrada ao meio; a metade de cima fica de ponta-cabeça */
+    .mesa .cartao {
+      display: grid; grid-template-columns: minmax(0, 1fr) 40cqw; grid-template-rows: auto 1fr auto auto;
+      column-gap: 5cqw; row-gap: 2cqw; align-items: center; justify-items: start; text-align: left;
+      aspect-ratio: 210 / 148; padding: 6cqw 6cqw 5cqw; background-size: 100% 2cqw, 100% 2cqw, auto;
+    }
+    .mesa .marca, .mesa .chamada, .mesa .url, .mesa .siga { grid-column: 1; }
+    .mesa .qr { grid-column: 2; grid-row: 1 / span 4; width: 40cqw; }
+    .mesa .marca { gap: 2.5cqw; }
+    .mesa .logo { width: 9cqw; height: 9cqw; }
+    .mesa .logo span { font-size: 2.7cqw; }
+    .mesa .nome-loja { font-size: 4.4cqw; letter-spacing: .04em; }
+    .mesa .igreja-nome { font-size: 2.3cqw; }
+    .mesa .chamada { font-size: 5cqw; }
+    .mesa .url { font-size: 2.3cqw; }
+    .mesa .siga { font-size: 3.2cqw; }
+    .mesa .cartao + .cartao { border-top: .3mm dashed var(--bronze-claro); }
+    .virado { transform: rotate(180deg); }
+
+    @media print {
+      body { background: var(--branco); }
+      .controles { display: none; }
+      .folha { margin: 0; box-shadow: none; }
+      .folha.a5 { width: 148mm; }
+      .folha.mesa { width: 210mm; }
+      .a5 .cartao { height: 209mm; aspect-ratio: auto; }
+      .mesa .cartao { height: 148mm; aspect-ratio: auto; break-inside: avoid; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.5.2/qrcode.min.js" integrity="sha512-c3HC2N32Up+KwxhFN2dZkoDWSdxWqwzDJCnroUffjS/HBQHf5Ou1uFpqIT0rOIJ5fW8TxHmUpCDndH2A6xNhpQ==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script type="module" src="js/qr.js?v=1"></script>
+</head>
+<body>
+  <div class="controles">
+    <h1>QR Code para imprimir</h1>
+    <p>Leva direto ao catálogo de preços da SARA STORE.</p>
+    <fieldset>
+      <legend>Modelo</legend>
+      <label class="opcao"><input type="radio" name="modelo" value="a5" checked> Folha A5</label>
+      <label class="opcao"><input type="radio" name="modelo" value="mesa"> Display de mesa (A4 dobrada)</label>
+    </fieldset>
+    <button id="imprimir" class="botao" type="button">Imprimir</button>
+    <p class="dica">Imprima em tamanho real (100%) e, se o navegador perguntar, sem margens. No display de mesa, dobre a folha A4 ao meio na linha tracejada.</p>
+    <p id="erro" class="erro" role="alert" hidden>Não foi possível gerar o QR Code. Verifique a internet e recarregue a página.</p>
+  </div>
+
+  <main id="folha" class="folha a5" aria-label="Prévia da impressão"></main>
+
+  <template id="modelo-cartao">
+    <div class="cartao">
+      <div class="marca">
+        <span class="logo" aria-hidden="true"><img src="img/logo.png" alt="" width="96" height="96"><span>sara</span></span>
+        <div>
+          <p class="nome-loja">SARA STORE</p>
+          <p class="igreja-nome">Igreja Sara Nossa Terra Biguaçu</p>
+        </div>
+      </div>
+      <p class="chamada">Aponte a câmera e veja os preços</p>
+      <div class="qr"></div>
+      <p class="url">https://leonardo681.github.io/PRACIMA/</p>
+      <p class="siga">Siga @sara.biguacu</p>
+    </div>
+  </template>
+</body>
+</html>
