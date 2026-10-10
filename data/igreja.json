@@ -8,17 +8,43 @@
     "comoChegarUrl": "https://www.google.com/maps/dir/?api=1&destination=-27.5055028,-48.6497846"
   },
   "cultos": [
-    { "dia": "Domingo", "horario": "10h", "nome": "Culto da Família" },
-    { "dia": "Domingo", "horario": "19h", "nome": "Culto da Família" },
-    { "dia": "Terça", "horario": "20h", "nome": "Fé e Milagres" },
-    { "dia": "Sábado", "horario": "18h", "nome": "Arena Jovem" },
-    { "dia": "Sábado", "horario": "20h30", "nome": "Conexão" }
+    {
+      "dia": "Domingo",
+      "horario": "10h",
+      "nome": "Culto da Família"
+    },
+    {
+      "dia": "Domingo",
+      "horario": "19h",
+      "nome": "Culto da Família"
+    },
+    {
+      "dia": "Terça",
+      "horario": "20h",
+      "nome": "Fé e Milagres"
+    },
+    {
+      "dia": "Sábado",
+      "horario": "18h",
+      "nome": "Arena Jovem"
+    },
+    {
+      "dia": "Sábado",
+      "horario": "20h30",
+      "nome": "Conexão"
+    }
   ],
   "links": {
-    "instagram": { "url": "https://www.instagram.com/sara.biguacu/", "rotulo": "@sara.biguacu" },
-    "youtube": { "url": "https://www.youtube.com/c/SaraBigua%C3%A7u", "rotulo": "Cultos online no YouTube" }
+    "instagram": {
+      "url": "https://www.instagram.com/sara.biguacu/",
+      "rotulo": "@sara.biguacu"
+    },
+    "youtube": {
+      "url": "https://www.youtube.com/c/SaraBigua%C3%A7u",
+      "rotulo": "Cultos online no YouTube"
+    }
   },
-  "ministerios": ["Sara Kids", "Arena (jovens)", "Conexão", "Mulheres", "Casais", "Células", "Projeto Social"],
+  "ministerios": [],
   "loja": {
     "pagamentos": [],
     "local": "",
