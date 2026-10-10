@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#6F5227">
+  <title>Painel – SARA STORE</title>
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/painel.css?v=1">
+  <link rel="modulepreload" href="js/comum.js?v=1">
+  <link rel="modulepreload" href="js/dialogo.js?v=1">
+  <link rel="modulepreload" href="js/github.js?v=1">
+  <link rel="modulepreload" href="js/fotos.js?v=1">
+  <script type="module" src="js/painel.js?v=1"></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="conteudo topo-linha">
+      <span class="logo" aria-hidden="true"><img id="logo" src="img/logo.png" alt="" width="40" height="40"><span>sara</span></span>
+      <h1>Painel SARA STORE</h1>
+      <button id="sair" class="botao-topo" type="button" hidden>Sair</button>
+    </div>
+  </header>
+
+  <noscript><p class="cartao conteudo-estreito">O painel precisa do JavaScript ativado no navegador.</p></noscript>
+
+  <main id="principal" class="conteudo">
+
+    <!-- Endereço sem HTTPS: crypto.subtle não existe -->
+    <section id="tela-contexto" class="tela conteudo-estreito" aria-labelledby="titulo-contexto" hidden>
+      <div class="cartao">
+        <h2 id="titulo-contexto">Endereço não seguro</h2>
+        <p>Abra pelo endereço https://leonardo681.github.io/PRACIMA/</p>
+      </div>
+    </section>
+
+    <!-- Login -->
+    <section id="tela-login" class="tela conteudo-estreito" aria-labelledby="titulo-login" hidden>
+      <form id="form-login" class="cartao" novalidate>
+        <h2 id="titulo-login">Entrar</h2>
+        <div class="campo">
+          <label for="login-usuario">Usuário</label>
+          <input id="login-usuario" name="usuario" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
+        </div>
+        <div class="campo">
+          <label for="login-senha">Senha</label>
+          <input id="login-senha" name="senha" type="password" autocomplete="current-password" required>
+        </div>
+        <p id="login-erro" class="erro" role="alert" hidden></p>
+        <button class="botao largo" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Chave do GitHub -->
+    <section id="tela-chave" class="tela conteudo-estreito" aria-labelledby="titulo-chave" hidden>
+      <div class="cartao">
+        <h2 id="titulo-chave">Conectar ao GitHub (só na primeira vez)</h2>
+        <p>A chave do GitHub é o que realmente protege o site: sem ela, ninguém altera nada. Siga os passos:</p>
+        <ol class="passos">
+          <li>Entre no GitHub <strong>com a conta leonardo681</strong> (a dona do repositório). Uma chave criada em outra conta não funciona, mesmo que essa conta seja colaboradora.</li>
+          <li>Ative a verificação em duas etapas (2FA) e <strong>guarde os códigos de recuperação</strong>.</li>
+          <li>Abra a página de criar a chave: <a id="link-criar-chave" class="link-forte" target="_blank" rel="noopener noreferrer">Criar a chave no GitHub</a>.<br>
+            Se o link não funcionar: Settings → Developer settings → Personal access tokens → <strong>Fine-grained tokens</strong> → Generate new token.</li>
+          <li>Configure a chave:
+            <ul>
+              <li>em “Repository access”, escolha <strong>Only select repositories → PRACIMA</strong>;</li>
+              <li>em permissões, <strong>Contents: Read and write</strong> (Metadata fica só leitura, automaticamente);</li>
+              <li>validade de 1 ano.</li>
+            </ul>
+          </li>
+          <li>Clique em “Generate token”, copie a chave (começa com <code>github_pat_</code>) e cole abaixo. Se perder, não tem problema: é só criar outra e apagar a antiga.</li>
+        </ol>
+
+        <form id="form-chave" novalidate>
+          <div class="campo">
+            <label for="chave">Chave do GitHub</label>
+            <input id="chave" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="github_pat_…" aria-describedby="chave-erro">
+            <p id="chave-erro" class="erro" role="alert" hidden></p>
+          </div>
+          <div class="campo">
+            <label class="marcar"><input id="lembrar" type="checkbox"> Lembrar neste aparelho</label>
+            <p class="dica">Marque só no seu celular pessoal, com bloqueio de tela.</p>
+          </div>
+          <p id="chave-status" class="status" role="status" aria-live="polite"></p>
+          <button id="conectar" class="botao largo" type="submit">Conectar</button>
+        </form>
+
+        <div class="separador" role="presentation"></div>
+        <button id="sem-chave" class="botao-secundario largo" type="button">Continuar sem chave (só rascunho)</button>
+        <p class="dica">Sem a chave dá para preparar tudo e baixar o produtos.json para publicar à mão, mas não dá para publicar direto nem enviar fotos.</p>
+      </div>
+    </section>
+
+    <!-- Painel -->
+    <section id="tela-painel" class="tela" aria-label="Painel" hidden>
+      <div class="situacao cartao">
+        <div class="situacao-linha">
+          <p id="conexao" class="conexao"></p>
+          <div class="botoes-linha">
+            <button id="conectar-chave" class="botao-secundario pequeno" type="button" hidden>Conectar chave</button>
+            <button id="esquecer-chave" class="botao-secundario pequeno" type="button" hidden>Esquecer a chave neste aparelho</button>
+          </div>
+        </div>
+        <div class="situacao-linha">
+          <p id="dados-de" class="dados-de">Carregando os dados…</p>
+          <button id="atualizar" class="botao-secundario pequeno" type="button" disabled>Atualizar</button>
+        </div>
+      </div>
+
+      <div id="avisos" class="avisos"></div>
+      <div id="no-ar" class="no-ar" role="status" aria-live="polite" hidden></div>
+
+      <nav class="abas" role="tablist" aria-label="Seções do painel">
+        <button id="aba-produtos" class="aba" type="button" role="tab" aria-selected="true" aria-controls="painel-produtos">Produtos</button>
+        <button id="aba-categorias" class="aba" type="button" role="tab" aria-selected="false" aria-controls="painel-categorias" tabindex="-1">Categorias</button>
+        <button id="aba-informacoes" class="aba" type="button" role="tab" aria-selected="false" aria-controls="painel-informacoes" tabindex="-1">Informações</button>
+        <button id="aba-ajuda" class="aba" type="button" role="tab" aria-selected="false" aria-controls="painel-ajuda" tabindex="-1">Ajuda</button>
+      </nav>
+
+      <!-- Produtos -->
+      <section id="painel-produtos" class="painel-aba" role="tabpanel" aria-labelledby="aba-produtos">
+        <div class="ferramentas">
+          <div class="busca">
+            <label class="vh" for="busca">Buscar produto</label>
+            <input id="busca" type="search" placeholder="Buscar produto…" autocomplete="off" spellcheck="false" enterkeyhint="search">
+          </div>
+          <button id="novo-produto" class="botao" type="button" disabled>+ Novo produto</button>
+        </div>
+        <p id="contagem" class="contagem" role="status" aria-live="polite"></p>
+        <div id="lista-produtos" class="lista-produtos" aria-busy="true">
+          <p class="carregando cartao">Carregando os produtos…</p>
+        </div>
+
+        <div class="cartao manual">
+          <h2>Publicar sem a chave</h2>
+          <p>Gera o arquivo produtos.json com todas as alterações, para colar no GitHub à mão.</p>
+          <button id="baixar" class="botao-secundario" type="button" disabled>Baixar produtos.json</button>
+        </div>
+      </section>
+
+      <!-- Categorias -->
+      <section id="painel-categorias" class="painel-aba" role="tabpanel" aria-labelledby="aba-categorias" hidden>
+        <form id="form-categoria" class="cartao" novalidate>
+          <h2>Nova categoria</h2>
+          <div class="campo">
+            <label for="nova-categoria">Nome da categoria</label>
+            <input id="nova-categoria" type="text" maxlength="40" autocomplete="off" aria-describedby="nova-categoria-erro">
+            <p id="nova-categoria-erro" class="erro" role="alert" hidden></p>
+          </div>
+          <button class="botao" type="submit">Criar categoria</button>
+        </form>
+        <ul id="lista-categorias" class="lista-categorias"></ul>
+        <p class="dica cartao">Uma categoria só pode ser excluída quando não tem nenhum produto, nem oculto. Para esvaziar, edite os produtos e troque a categoria deles.</p>
+      </section>
+
+      <!-- Informações da igreja e da loja -->
+      <section id="painel-informacoes" class="painel-aba" role="tabpanel" aria-labelledby="aba-informacoes" hidden>
+        <form id="form-igreja" novalidate>
+          <p class="cartao dica">Estas informações aparecem na parte da igreja e na faixa do topo do site. Campo vazio não aparece no site. As mudanças vão junto no próximo “Publicar”.</p>
+          <div id="igreja-campos"></div>
+          <p id="igreja-erro" class="erro cartao" role="alert" hidden></p>
+          <div class="botoes-linha fim">
+            <button id="igreja-desfazer" class="botao-secundario" type="button" hidden>Desfazer mudanças nas informações</button>
+            <button id="igreja-salvar" class="botao" type="submit" disabled>Salvar informações</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Ajuda -->
+      <section id="painel-ajuda" class="painel-aba ajuda" role="tabpanel" aria-labelledby="aba-ajuda" hidden>
+        <div class="cartao">
+          <h2>Como funciona</h2>
+          <p>Tudo o que você muda aqui fica guardado <strong>só neste aparelho</strong> (é o “rascunho”) até você tocar em <strong>Publicar</strong>. A barra embaixo mostra quantas alterações ainda não foram publicadas. Pode fechar o painel sem medo: o rascunho continua guardado.</p>
+        </div>
+
+        <div class="cartao">
+          <h2>Adicionar um produto</h2>
+          <ol>
+            <li>Na aba <strong>Produtos</strong>, toque em <strong>+ Novo produto</strong>.</li>
+            <li>Preencha o nome, a categoria e o preço. O preço pode ser digitado como 74 ou 74,50.</li>
+            <li>Se quiser, escreva a descrição, uma informação curta (ex.: “Tamanhos P ao GG”) e as variações com preço próprio (ex.: Adulto e Infantil).</li>
+            <li>Para a foto, toque em <strong>Escolher foto</strong>: dá para tirar na hora ou pegar da galeria. O painel já diminui a foto sozinho.</li>
+            <li>Marque <strong>Novidade</strong> para o produto ganhar o selo por 30 dias.</li>
+            <li>Toque em <strong>Salvar</strong> e depois em <strong>Publicar</strong>.</li>
+          </ol>
+        </div>
+
+        <div class="cartao">
+          <h2>Ocultar ou excluir</h2>
+          <ul>
+            <li><strong>Ocultar</strong> (chave Visível / Oculto): o produto some do site, mas continua guardado. Para voltar, é só deixar Visível de novo. Use quando acabar o estoque ou o produto sair por um tempo.</li>
+            <li><strong>Excluir</strong>: apaga o produto de vez. Só use quando ele não vai mais voltar.</li>
+            <li><strong>Duplicar</strong>: cria uma cópia (sem foto) para cadastrar um produto parecido mais rápido.</li>
+            <li>As setas <strong>↑ ↓</strong> mudam a ordem dos produtos dentro da categoria.</li>
+          </ul>
+        </div>
+
+        <div class="cartao">
+          <h2>Publicar</h2>
+          <ol>
+            <li>Toque em <strong>Publicar</strong> na barra de baixo.</li>
+            <li>Confira a lista de alterações e os avisos, e confirme.</li>
+            <li>Espere a mensagem “Enviado!”. Não feche o painel enquanto estiver enviando.</li>
+          </ol>
+          <p><strong>Quanto tempo demora?</strong> Normalmente o site atualiza para todos em 1 a 2 minutos, mas pode levar até 10. O painel avisa quando já estiver no ar. Se depois de 12 minutos ainda não tiver aparecido, abra github.com/leonardo681/PRACIMA/actions para ver se deu erro.</p>
+          <p>Se outra pessoa publicar ao mesmo tempo, o painel junta as duas coisas: as suas alterações são aplicadas por cima da versão mais nova, sem apagar o que a outra pessoa fez.</p>
+        </div>
+
+        <div class="cartao">
+          <h2>Sem a chave (só rascunho)</h2>
+          <p>Dá para preparar tudo e tocar em <strong>Baixar produtos.json</strong>. Depois, no GitHub: abra o repositório PRACIMA → pasta data → produtos.json → lápis (editar) → apague tudo e cole o conteúdo novo → <strong>Commit changes</strong>. Isso substitui o arquivo inteiro. Fotos só podem ser enviadas com a chave.</p>
+        </div>
+
+        <div class="cartao">
+          <h2>A chave expirou ou se perdeu</h2>
+          <p>A chave vale por 1 ano. Quando ela expirar, o painel avisa “Chave do GitHub inválida ou expirada” e pede outra. <strong>Nada do rascunho se perde.</strong></p>
+          <ol>
+            <li>Entre no GitHub com a conta <strong>leonardo681</strong>.</li>
+            <li>Abra <a id="link-chaves" class="link-forte" target="_blank" rel="noopener noreferrer">a lista de chaves</a> e apague a antiga (se ainda aparecer).</li>
+            <li>Crie uma nova pelo passo a passo da tela “Conectar ao GitHub” (<a id="link-criar-chave-ajuda" class="link-forte" target="_blank" rel="noopener noreferrer">criar a chave</a>): Only select repositories → PRACIMA, Contents: Read and write, validade de 1 ano.</li>
+            <li>Cole a chave nova no painel.</li>
+          </ol>
+          <p>Perdeu o celular onde a chave estava lembrada? Apague a chave na lista de chaves do GitHub na hora. Sem ela, ninguém consegue alterar o site.</p>
+        </div>
+
+        <div class="cartao">
+          <h2>Segurança</h2>
+          <ul>
+            <li>O login deste painel é só uma <strong>cortina para curiosos</strong>. Como o site é estático e o código é público, quem ler o código consegue passar desta tela.</li>
+            <li><strong>Quem protege de verdade é a chave do GitHub.</strong> Sem ela, ninguém altera nada, mesmo passando do login.</li>
+            <li>A chave nunca vai para o repositório: nem codificada, nem criptografada, nem dividida em partes. O GitHub revoga sozinho chaves que aparecem em repositório público.</li>
+            <li>O endereço leonardo681.github.io é dividido com os outros sites dessa conta no GitHub Pages, e todos eles conseguem ler o que fica guardado no navegador para esse endereço. Por isso, o padrão é guardar a chave só até fechar o navegador.</li>
+            <li>Marque <strong>“Lembrar neste aparelho”</strong> só em celular pessoal com bloqueio de tela. Para isolar de vez, dá para usar um domínio próprio ou uma conta/organização separada no GitHub (ex.: sarabiguacu.github.io).</li>
+            <li><strong>Sair</strong> apaga só o login desta sessão (e a chave, se ela não estiver lembrada). O rascunho continua guardado.</li>
+          </ul>
+          <p><strong>Se algo der errado:</strong></p>
+          <ol>
+            <li>apague (revogue) a chave em github.com/settings/personal-access-tokens;</li>
+            <li>volte o commit no GitHub (revert). Todo o histórico fica salvo.</li>
+          </ol>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Barra fixa de alterações não publicadas -->
+  <div id="barra" class="barra" hidden>
+    <div class="conteudo barra-linha">
+      <p id="barra-texto" class="barra-texto"></p>
+      <div class="botoes-linha">
+        <button id="descartar" class="botao-secundario" type="button">Descartar alterações</button>
+        <button id="publicar" class="botao" type="button">Publicar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="recado" class="recado" role="status" aria-live="polite"></div>
+
+  <!-- Formulário de produto -->
+  <dialog id="dialogo-produto" class="folha" aria-labelledby="produto-titulo">
+    <form id="form-produto" class="folha-form" novalidate>
+      <div class="folha-topo">
+        <h2 id="produto-titulo">Novo produto</h2>
+        <button id="produto-fechar" class="fechar" type="button" aria-label="Fechar">✕</button>
+      </div>
+      <div class="folha-corpo">
+        <div class="campo">
+          <label for="p-nome">Nome <span class="obrigatorio" aria-hidden="true">*</span></label>
+          <input id="p-nome" type="text" maxlength="120" autocomplete="off" required aria-describedby="p-nome-erro">
+          <p id="p-nome-erro" class="erro" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="p-categoria">Categoria <span class="obrigatorio" aria-hidden="true">*</span></label>
+          <select id="p-categoria" required aria-describedby="p-categoria-erro"></select>
+          <p id="p-categoria-erro" class="erro" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="p-preco">Preço <span class="obrigatorio" aria-hidden="true">*</span></label>
+          <div class="campo-preco">
+            <span aria-hidden="true">R$</span>
+            <input id="p-preco" type="text" inputmode="decimal" autocomplete="off" required aria-describedby="p-preco-dica p-preco-erro">
+          </div>
+          <p id="p-preco-dica" class="dica">Ex.: 74 ou 74,50</p>
+          <p id="p-preco-erro" class="erro" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="p-descricao">Descrição</label>
+          <textarea id="p-descricao" rows="3" maxlength="500"></textarea>
+        </div>
+
+        <div class="campo">
+          <label for="p-info">Informação curta</label>
+          <input id="p-info" type="text" maxlength="80" autocomplete="off" aria-describedby="p-info-dica">
+          <p id="p-info-dica" class="dica">Ex.: Tamanhos P ao GG</p>
+        </div>
+
+        <fieldset class="campo grupo">
+          <legend>Variações (opcional)</legend>
+          <p class="dica">Opções com preço próprio, como Adulto / Infantil ou capa dura / brochura. O site mostra “a partir de” com o menor preço.</p>
+          <div id="p-variacoes" class="variacoes"></div>
+          <button id="p-nova-variacao" class="botao-secundario" type="button">+ Adicionar variação</button>
+        </fieldset>
+
+        <fieldset class="campo grupo">
+          <legend>Foto</legend>
+          <div class="foto-area">
+            <div id="p-foto-previa" class="foto-previa"></div>
+            <div class="foto-acoes">
+              <input id="p-foto" class="vh arquivo" type="file" accept="image/*" aria-describedby="p-foto-info p-foto-erro">
+              <label id="p-foto-botao" for="p-foto" class="botao-secundario">Escolher foto</label>
+              <button id="p-foto-remover" class="botao-secundario" type="button" hidden>Remover foto</button>
+              <p id="p-foto-info" class="dica" aria-live="polite"></p>
+              <p id="p-foto-erro" class="erro" role="alert" hidden></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label class="marcar"><input id="p-novidade" type="checkbox" aria-describedby="p-novidade-info"> Novidade</label>
+          <p id="p-novidade-info" class="dica">Marcando, o produto ganha o selo “Novidade” por 30 dias.</p>
+        </div>
+
+        <div class="campo">
+          <label class="marcar"><input id="p-visivel" type="checkbox" checked aria-describedby="p-visivel-dica"> Visível no site</label>
+          <p id="p-visivel-dica" class="dica">Desmarque para ocultar sem apagar.</p>
+        </div>
+
+        <p id="p-erro-geral" class="erro" role="alert" hidden></p>
+      </div>
+      <div class="folha-rodape">
+        <button id="produto-cancelar" class="botao-secundario" type="button">Cancelar</button>
+        <button id="produto-salvar" class="botao" type="submit">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Caixas de confirmação e perguntas (montadas pelo painel.js) -->
+  <dialog id="dialogo-caixa" class="caixa" aria-labelledby="caixa-titulo"></dialog>
+
+  <!-- Publicar -->
+  <dialog id="dialogo-publicar" class="folha" aria-labelledby="publicar-titulo"></dialog>
+
+  <!-- Baixar / publicar à mão -->
+  <dialog id="dialogo-baixar" class="folha" aria-labelledby="baixar-titulo"></dialog>
+</body>
+</html>
