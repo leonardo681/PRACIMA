@@ -15,7 +15,7 @@
   --raio: 12px;
   --topo-fixo: 72px;        /* altura do que fica grudado no topo (chips) */
   --fonte: Roboto, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
-  color-scheme: light;
+  color-scheme: only light; /* impede o navegador de escurecer a página */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
