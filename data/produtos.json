@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-10-10T00:43:52-03:00",
+  "atualizadoEm": "2026-10-13T10:03:01-03:00",
   "categorias": [
     {
       "id": "camisetas",
@@ -33,8 +33,7 @@
       "imagem": "img/produtos/camiseta-jesus-mv1kiu80-unsplash.webp",
       "miniatura": "img/produtos/camiseta-jesus-mv1kiu80-unsplash-mini.webp",
       "visivel": true,
-      "ordem": 10,
-      "novidadeAte": "2026-11-09"
+      "ordem": 10
     },
     {
       "id": "camiseta-fe-e-graca-mv1kiu81",
