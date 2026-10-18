@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-10-18T18:49:00-03:00",
+  "atualizadoEm": "2026-10-18T19:02:44-03:00",
   "categorias": [
     {
       "id": "camisetas",
@@ -243,6 +243,39 @@
       "miniatura": "img/produtos/agenda-devocional-mv1kiu8j-unsplash-mini.webp",
       "visivel": true,
       "ordem": 30
+    },
+    {
+      "id": "minha-primeira-biblia-mved4xmd",
+      "categoria": "livros",
+      "nome": "Minha Primeira Bíblia",
+      "descricao": "Esta pequena BÍBLIA traz histórias contadas por meio de ILUSTRAÇÕES que substituem algumas palavras. Um presente ideal para os pequenos aprenderem sobre o AMOR DE DEUS!",
+      "precoCentavos": 1500,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 40
+    },
+    {
+      "id": "inteligencia-espiritual-como-ser-feliz-no-trabalho-na-familia-e-nos-relacionamentos-mvedami4",
+      "categoria": "livros",
+      "nome": "Inteligência Espiritual - Como ser feliz no trabalho, na família e nos relacionamentos",
+      "descricao": "Neste livro veremos como a Inteligência espiritual vem se tornando mais relevante a cada dia, tomando mais espaço entre executivos e gestores de grandes organizações. A cada dia vemos mais pessoas questionando seus propósitos e querendo contribuir para um mundo melhor, em vez de serem levadas pelo fluxo da ganância e lucratividade a qualquer custo. \n\n​Esse despertar é um legado da igreja do Senhor, da evangelização e dos princípios cristãos.",
+      "precoCentavos": 1500,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 50
+    },
+    {
+      "id": "superado-os-golpes-da-vida-mvedfr64",
+      "categoria": "livros",
+      "nome": "Superado os Golpes da Vida",
+      "descricao": "Você já se sentiu derrubado pelos golpes da vida? Seja uma traição dolorosa, uma decepção profunda ou a perda de algo que parecia inabalável — todos nós, em algum momento, somos surpreendidos por desafios que testam nossa fé e nossa força. \n\n​Em Superando os Golpes da Vida, você vai descobrir que esses momentos, embora difíceis, podem ser transformados em trampolins para a vitória. Aqui, você aprenderá que o caminho da superação não depende apenas de sua própria força, mas da presença e do poder",
+      "precoCentavos": 1500,
+      "imagem": "",
+      "miniatura": "",
+      "visivel": true,
+      "ordem": 60
     }
   ]
 }
