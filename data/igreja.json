@@ -32,6 +32,11 @@
       "dia": "Sábado",
       "horario": "20h30",
       "nome": "Conexão"
+    },
+    {
+      "dia": "Sábado",
+      "horario": "18h",
+      "nome": "Next Generation"
     }
   ],
   "links": {
